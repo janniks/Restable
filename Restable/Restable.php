@@ -43,7 +43,7 @@ class Restable {
 		// set standard function
 		$this->bad_path = function() {
 			self::json(array(
-				'error' => 'bad path',
+				'error' => '404 - not found',
 			));
 		};
 	}
@@ -223,10 +223,21 @@ class Restable {
 	}
 
 	/**
+	 * Sets HTTP status code
+	 * @param  int    $code  HTTP status code
+	 * @return object        this
+	 */
+	public function status($code) {
+		if (is_int($code))
+			http_response_code($code);
+		return $this;
+	}
+
+	/**
 	 * Executes the $bad_path function when no routes found
 	 */
 	private function bad_path() {
-		call_user_func($this->bad_path);
+		call_user_func($this->status(404)->bad_path);
 	}
 
 	/**
