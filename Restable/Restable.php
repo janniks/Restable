@@ -128,7 +128,7 @@ class Restable {
 		// set action parameters
 		$this->actions[] = array(
 			'method' => $method,
-			'path' => (isset($matches[3])) ? $matches[3] : $matches[1],
+			'path' => (isset($matches[3])) ? $matches[3] : $matches[1] . ':',
 			'callable' => $callable,
 			'hooks' => $hooks,
 		);
@@ -157,7 +157,10 @@ class Restable {
 	 */
 	private function get_callable_method_actions() {
 		return array_filter($this->actions, function($e) {
-			return ($e['method'] === self::request_method() && is_callable($e['callable']) && strpos(self::request_path(), $e['path']) === 0);
+			return ($e['method'] === self::request_method() &&
+					is_callable($e['callable']) &&
+					strpos(self::request_path(), rtrim($e['path'], ':')) === 0 &&
+					($e['path'] === self::request_path() || substr($e['path'], strlen($e['path']) - 1) === ':'));
 		});
 	}
 
@@ -167,7 +170,7 @@ class Restable {
 	 * @return string       resource parameter
 	 */
 	public static function parse_parameter($path) {
-		return end((explode($path, self::request_path())));
+		return end((explode(substr($path, 0, strlen($path) - 1), self::request_path())));
 	}
 
 	/**
@@ -211,7 +214,7 @@ class Restable {
 	 * @return string instance request path
 	 */
 	public static function request_path() {
-		return $_SERVER['REQUEST_URI'];
+		return rtrim($_SERVER['REQUEST_URI'], '/');
 	}
 
 	/**
@@ -247,8 +250,10 @@ class Restable {
 	public static function json($object) {
 
 		// set necessary headers
-		header('Access-Control-Allow-Origin: *');
-		header('Content-Type: application/json');
+		if (!headers_sent()) {
+			header('Access-Control-Allow-Origin: *');
+			header('Content-Type: application/json');
+		}
 
 		// output JSON
 		echo json_encode($object);
