@@ -119,16 +119,16 @@ class Restable {
 
 		// match resource to path
 		$matches = array();
-		preg_match("!^(?'path'[^\:]*\/?)(?'var'\:[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)?$!", $resource, $matches);
+		preg_match("!^([^\:]*\/)(\:[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)?$|^([^\:]+)$!", $resource, $matches);
 
 		// abort if path not valid
-		if (empty($matches) || !isset($matches['path']))
+		if (empty($matches))
 			self::fatal('Path expression not valid!');
 
 		// set action parameters
 		$this->actions[] = array(
 			'method' => $method,
-			'path' => $matches['path'],
+			'path' => (isset($matches[3])) ? $matches[3] : $matches[1],
 			'callable' => $callable,
 			'hooks' => $hooks,
 		);
