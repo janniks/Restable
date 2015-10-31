@@ -167,7 +167,7 @@ class Restable {
 	 * @return string       resource parameter
 	 */
 	public static function parse_parameter($path) {
-		return end(explode($path, self::request_path()));
+		return end((explode($path, self::request_path())));
 	}
 
 	/**
