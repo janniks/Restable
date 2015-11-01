@@ -174,37 +174,29 @@ class Restable {
 	}
 
 	/**
-	 * Calls action hooks and function
+	 * Calls before action hooks, callable function, and after action hooks
 	 * @param array $action array with action parameter
 	 */
 	private static function call_action($action) {
 		
 		// call before hook
-		self::call_before($action);
+		self::call_hooks('before', $action);
 
 		// call function with possible variable
 		call_user_func($action['callable'], self::parse_parameter($action['path']));
 
 		// call after hook
-		self::call_after($action);
+		self::call_hooks('after', $action);
 	}
 
 	/**
-	 * Calls action before hook
-	 * @param array $action array with action parameter
+	 * Calls action hooks
+	 * @param string $hook   which hooks to execute
+	 * @param array  $action array with action parameter
 	 */
-	private static function call_before($action) {
-		if (!empty($action) && !empty($action['hooks']) && !empty($action['hooks']['before']) && is_callable($action['hooks']['before']))
-			call_user_func($action['hooks']['before']);
-	}
-
-	/**
-	 * Calls action after hook
-	 * @param array $action array with action parameter
-	 */
-	private static function call_after($action) {
-		if (!empty($action) && !empty($action['hooks']) && !empty($action['hooks']['after']) && is_callable($action['hooks']['after']))
-			call_user_func($action['hooks']['after']);
+	private static function call_hooks($hook, $action) {
+		if (!empty($action) && !empty($action['hooks']) && !empty($action['hooks'][$hook]) && is_callable($action['hooks'][$hook]))
+			call_user_func($action['hooks'][$hook]);
 	}
 
 	// Misc Methods ============================================================
