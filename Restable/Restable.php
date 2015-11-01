@@ -194,9 +194,20 @@ class Restable {
 	 * @param string $hook   which hooks to execute
 	 * @param array  $action array with action parameter
 	 */
-	private static function call_hooks($hook, $action) {
-		if (!empty($action) && !empty($action['hooks']) && !empty($action['hooks'][$hook]) && is_callable($action['hooks'][$hook]))
-			call_user_func($action['hooks'][$hook]);
+	private static function call_hooks($hooks, $action) {
+		if (empty($action) || empty($action['hooks']) || empty($action['hooks'][$hooks]))
+			return;
+
+		// if array of hooks call each one
+		if (is_array($action['hooks'][$hooks])) {
+			foreach($action['hooks'][$hooks] as $hook) {
+				if (is_callable($hook)) {
+					call_user_func($hook);
+				}
+			}
+		} else if (is_callable($action['hooks'][$hooks])) {
+			call_user_func($action['hooks'][$hooks]);
+		}
 	}
 
 	// Misc Methods ============================================================
