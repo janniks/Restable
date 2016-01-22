@@ -1,4 +1,4 @@
-⚠️ This is a work in progress. ⚠️
+This is a work in progress. ⚠️ That being said, even though Restable provides limited functionality compared to other frameworks, it is very stable and does what it is supposed to do.
 
 # Restable
 The probabaly tiniest PHP extensible micro-framework there is.
@@ -133,10 +133,10 @@ $app->get('/secret', function() {
 ***TODO:** status, bad path, json, request path, etc. *
 
 ## Todo
-[x] Add simple JSON output
-[ ] Add simple stats code
-[ ] Add additional request and response types
-[ ] Add multiple parameter capability
-[ ] Add API blueprints
-[ ] Add testing
-[ ] Finish documentation
+- [x] Add simple JSON output
+- [ ] Add simple stats code
+- [ ] Add additional request and response types
+- [ ] Add multiple parameter capability
+- [ ] Add API blueprints
+- [ ] Add testing
+- [ ] Finish documentation
