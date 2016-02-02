@@ -68,7 +68,7 @@ You also have a variety of shorthand register functions.
 
 * `get`
 * `post`
-* `update`
+* `put`
 * `delete`
 
 You can use these shorthands just like the `$app->get()` in the Hello World tutorial.
@@ -84,7 +84,7 @@ $app->post('/user', function() {
 You can parse parameters from the resource URL. Just add a `:` in the `path`.
 
 ```php
-$app->update('/user/:user_id', function($user_id) {
+$app->put('/user/:user_id', function($user_id) {
     echo 'update user ' . $user_id;
 });
 ```
