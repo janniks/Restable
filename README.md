@@ -1,4 +1,4 @@
-This is a work in progress. ⚠️ That being said, even though Restable provides limited functionality compared to other frameworks, it is very stable and does what it is supposed to do.
+This is a work in progress. ⚠️ That being said, even though Restable provides limited functionality compared to other frameworks, it is very stable and does what it is supposed to do. However, Restable is a toy project and not meant for production use.
 
 # Restable
 The probabaly tiniest PHP extensible micro-framework there is.
