@@ -217,7 +217,10 @@ class Restable {
 	 * @return string instance request path
 	 */
 	public static function request_path() {
-		return rtrim($_SERVER['REQUEST_URI'], '/');
+		$path=rtrim($_SERVER['REQUEST_URI'], '/');
+	        $path = empty($path) ? '/' :$path;
+	
+		return  $path;
 	}
 
 	/**
